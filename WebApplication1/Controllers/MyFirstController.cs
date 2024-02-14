@@ -35,5 +35,17 @@ namespace WebApplication1.Controllers
                 return myModels;
             }
         }
+        [HttpPost]
+        public string Post(string username,string password)
+        {
+            using (NpgsqlConnection connection = new NpgsqlConnection(connectionString))
+            {
+                connection.Open();
+                string query = $"insert into Data1(name, password) values('{username}','{password}');";
+                NpgsqlCommand command = new NpgsqlCommand(query, connection);
+                command.ExecuteNonQuery();
+            }
+            return "Qoshildi";
+        }
     }
 }
