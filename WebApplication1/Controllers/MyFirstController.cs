@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Npgsql;
 using WebApplication1.NewFolder;
-
+using Dapper;
 namespace WebApplication1.Controllers
 {
     [Route("api/[controller],[action]")]
@@ -46,6 +46,18 @@ namespace WebApplication1.Controllers
                 command.ExecuteNonQuery();
             }
             return "Qoshildi";
+        }
+        [HttpDelete]
+        public int DeleteDataWithDapper(int id)
+        {
+            string sql = $"Delete from data1 where id = @id";
+
+            using (NpgsqlConnection connection = new NpgsqlConnection(connectionString))
+            {
+                var x = connection.Execute(sql, new { Id = id });
+
+                return x;
+            }
         }
     }
 }
